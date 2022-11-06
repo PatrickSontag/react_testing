@@ -1,19 +1,21 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import Carousel from "./Carousel";
+import { fireEvent, getByTestId, render, screen } from '@testing-library/react';
+import Carousel from './Carousel';
 
-it("works when you click on the right arrow", function() {
-  const { queryByTestId, queryByAltText } = render(<Carousel />);
+it ("should render", () => {
+    render(<Carousel/>);
+})
 
-  // expect the first image to show, but not the second
-  expect(queryByAltText("Photo by Richard Pasquarella on Unsplash")).toBeInTheDocument();
-  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).not.toBeInTheDocument();
+it("should match snapshot", () => {
+    const { asFragment } = render(<Carousel />);
+    expect(asFragment()).toMatchSnapshot();
+})
 
-  // move forward in the carousel
-  const rightArrow = queryByTestId("right-arrow");
-  fireEvent.click(rightArrow);
-
-  // expect the second image to show, but not the first
-  expect(queryByAltText("Photo by Richard Pasquarella on Unsplash")).not.toBeInTheDocument();
-  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).toBeInTheDocument();
-});
+it("should show next/previous image when right/left arrow clicked", () => {
+    const { getByText } = render(<Carousel />);
+    const textCard1 = getByText("Photo by Richard Pasquarella on Unsplash");
+    const arrowRight = screen.getByTestId("right-arrow");
+    expect(textCard1).toHaveTextContent("Photo by Richard Pasquarella on Unsplash");
+    fireEvent.click(arrowRight);
+    const arrowLeft = screen.getByTestId("left-arrow");
+    const textCard2 = getByText("Photo by Pratik Patel on Unsplash");
+})
