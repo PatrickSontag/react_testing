@@ -26,7 +26,8 @@ it("should show next/previous image when right/left arrow clicked", () => {
 
 
 it("should hide left arrow when on first image", () => {
-    const { queryByTestId } = render(<Carousel />);
+    const { queryByTestId, debug } = render(<Carousel />);
+    debug();
     const arrowLeft = queryByTestId("left-arrow");
     expect(arrowLeft).toBeNull();
 })
