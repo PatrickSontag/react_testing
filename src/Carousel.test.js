@@ -18,4 +18,9 @@ it("should show next/previous image when right/left arrow clicked", () => {
     fireEvent.click(arrowRight);
     const arrowLeft = screen.getByTestId("left-arrow");
     const textCard2 = getByText("Photo by Pratik Patel on Unsplash");
+    expect(textCard1).not.toHaveTextContent("Photo by Richard Pasquarella on Unsplash");
+    expect(textCard1).toHaveTextContent("Photo by Pratik Patel on Unsplash");
+    fireEvent.click(arrowLeft);
+    expect(textCard1).toHaveTextContent("Photo by Richard Pasquarella on Unsplash");
+    expect(textCard1).not.toHaveTextContent("Photo by Pratik Patel on Unsplash");
 })
